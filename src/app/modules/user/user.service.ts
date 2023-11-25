@@ -50,6 +50,10 @@ const getAllUpdatedOrders = async (userId: string) => {
   return result;
 };
 
+// const getOrdersTotalPrice=async()=>{
+//   const totalPrice=
+// }
+
 const deletedUser = async (userId: string) => {
   const result = await UserModel.deleteOne({ userId });
   return result;

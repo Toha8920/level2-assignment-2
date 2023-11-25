@@ -164,11 +164,22 @@ const allUpdateOrders = async (req: Request, res: Response) => {
   const userId = req.params.userId;
   console.log(userId);
   const result = await userServices.getAllUpdatedOrders(userId);
-  res.status(200).json({
-    success: true,
-    message: 'Users fetched successfully!',
-    data: result,
-  });
+  if (result) {
+    res.status(200).json({
+      success: true,
+      message: 'Users fetched successfully!',
+      data: result,
+    });
+  } else {
+    res.json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+    });
+  }
 };
 
 export const userController = {
