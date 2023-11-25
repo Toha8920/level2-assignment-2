@@ -15,7 +15,7 @@ export type User = {
     city: string;
     country: string;
   };
-  orders: [
+  orders?: [
     {
       productName: string;
       price: number;

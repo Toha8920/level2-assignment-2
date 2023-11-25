@@ -6,7 +6,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/', StudentRoutes);
+app.use('/api', StudentRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Ami tomay valobasi');
