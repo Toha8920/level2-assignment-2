@@ -9,7 +9,7 @@ app.use(cors());
 app.use('/api', StudentRoutes);
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Ami tomay valobasi');
+  res.send('Hello world');
 });
 
 export default app;

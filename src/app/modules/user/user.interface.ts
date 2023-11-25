@@ -1,4 +1,7 @@
-export type User = {
+/* eslint-disable no-unused-vars */
+import { Model } from 'mongoose';
+
+export type TUser = {
   userId: number;
   username: string;
   password: string;
@@ -23,3 +26,7 @@ export type User = {
     },
   ];
 };
+
+export interface UserModel extends Model<TUser> {
+  isUserExists(id: string): Promise<TUser | null>;
+}
