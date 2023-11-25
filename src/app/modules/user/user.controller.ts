@@ -89,10 +89,19 @@ const deletedUser = async (req: Request, res: Response) => {
     const result = await userServices.deletedUser(userId);
 
     if (result.deletedCount > 0) {
-      res.status(200).json({
+      res.status(500).json({
         success: true,
         message: 'User deleted successfully!',
         data: result,
+      });
+    } else {
+      res.json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
       });
     }
   } catch (err: any) {
@@ -110,7 +119,13 @@ const getUpdateUser = async (req: Request, res: Response) => {
     const userId = req.params.userId;
     const result = await userServices.getUpdateUser(userId, userData);
 
-    if (!(await User.isUserExists(userId))) {
+    if (result) {
+      res.status(200).json({
+        status: 'success',
+        message: 'User updated successfully',
+        data: result,
+      });
+    } else {
       res.json({
         success: false,
         message: 'User not found',
@@ -118,13 +133,6 @@ const getUpdateUser = async (req: Request, res: Response) => {
           code: 404,
           description: 'User not found!',
         },
-      });
-    }
-    if (result) {
-      res.status(200).json({
-        status: 'success',
-        message: 'User updated successfully',
-        data: result,
       });
     }
   } catch (error: any) {
@@ -136,51 +144,90 @@ const getUpdateUser = async (req: Request, res: Response) => {
 };
 
 const updatedOrder = async (req: Request, res: Response) => {
-  const userId = req.params.userId;
-  const orders = req.body.orders;
-  const result = await userServices.updatedOrder(userId, orders);
+  try {
+    const userId = req.params.userId;
+    const orders = req.body.orders;
+    const result = await userServices.updatedOrder(userId, orders);
 
-  if (result) {
-    res.status(200).json({
-      status: 'success',
-      message: 'User updated successfully',
-      data: result,
+    if (result) {
+      res.status(200).json({
+        status: 'success',
+        message: 'User updated successfully',
+        data: result,
+      });
+    } else {
+      res.json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+      error: err,
     });
   }
 };
 
 const allUpdateOrders = async (req: Request, res: Response) => {
-  const userId = req.params.userId;
-
-  const result = await userServices.getAllUpdatedOrders(userId);
-
-  if (result) {
-    res.status(200).json({
-      success: true,
-      message: 'Users fetched successfully!',
-      data: result,
+  try {
+    const userId = req.params.userId;
+    const result = await userServices.getAllUpdatedOrders(userId);
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'Users fetched successfully!',
+        data: result,
+      });
+    } else {
+      res.json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+      error: err,
     });
   }
 };
 
 const getAllTotalPrice = async (req: Request, res: Response) => {
-  const userId = req.params.userId;
-  const result = await userServices.getAllTotalPrice(userId);
-
-  if (result) {
-    res.status(200).json({
-      success: true,
-      message: 'Users fetched successfully!',
-      data: result,
-    });
-  } else {
-    res.json({
+  try {
+    const userId = req.params.userId;
+    const result = await userServices.getAllTotalPrice(userId);
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'Users fetched successfully!',
+        data: result,
+      });
+    } else {
+      res.json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+  } catch (err: any) {
+    res.status(500).json({
       success: false,
-      message: 'User not found',
-      error: {
-        code: 404,
-        description: 'User not found!',
-      },
+      message: 'Something went wrong',
+      error: err,
     });
   }
 };
