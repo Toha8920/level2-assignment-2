@@ -139,10 +139,9 @@ const getUpdateUser = async (req: Request, res: Response) => {
 
 const updatedOrder = async (req: Request, res: Response) => {
   const userId = req.params.userId;
-  const body = req.body.orders;
-
-  const result = await userServices.updatedOrder(userId, body);
-  console.log(result);
+  const orders = req.body.orders;
+  console.log(orders);
+  const result = await userServices.updatedOrder(userId, orders);
   if (result) {
     res.status(200).json({
       status: 'success',
@@ -161,6 +160,17 @@ const updatedOrder = async (req: Request, res: Response) => {
   }
 };
 
+const allUpdateOrders = async (req: Request, res: Response) => {
+  const userId = req.params.userId;
+  console.log(userId);
+  const result = await userServices.getAllUpdatedOrders(userId);
+  res.status(200).json({
+    success: true,
+    message: 'Users fetched successfully!',
+    data: result,
+  });
+};
+
 export const userController = {
   createUser,
   getAllUsers,
@@ -168,4 +178,5 @@ export const userController = {
   deletedUser,
   getUpdateUser,
   updatedOrder,
+  allUpdateOrders,
 };

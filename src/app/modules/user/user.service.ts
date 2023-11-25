@@ -42,6 +42,14 @@ const updatedOrder = async (
   return user;
 };
 
+const getAllUpdatedOrders = async (userId: string) => {
+  const result = await UserModel.aggregate([
+    { $match: { userId: Number(userId) } },
+    { $project: { orders: 1 } },
+  ]);
+  return result;
+};
+
 const deletedUser = async (userId: string) => {
   const result = await UserModel.deleteOne({ userId });
   return result;
@@ -54,4 +62,5 @@ export const userServices = {
   deletedUser,
   getUpdateUser,
   updatedOrder,
+  getAllUpdatedOrders,
 };
