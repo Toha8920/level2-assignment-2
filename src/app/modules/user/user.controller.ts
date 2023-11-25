@@ -89,7 +89,7 @@ const deletedUser = async (req: Request, res: Response) => {
     const result = await userServices.deletedUser(userId);
 
     if (result.deletedCount > 0) {
-      res.status(500).json({
+      res.status(200).json({
         success: true,
         message: 'User deleted successfully!',
         data: result,
